@@ -1,12 +1,36 @@
-from utilities import get_info, check_password, register_page, record_user
+from utilities import get_info, check_password, record_user, check_user_existence
+
+def register_page():
+    correctName = False
+    while True:
+        getUsers=get_info("users")
+        if not correctName:
+            print("What is your name?")
+            newName=input() 
+            correctName = True
+        print("What is your password?")
+        newPassword=input()
+        print("Please enter again to confirm your password.")
+        confirmPassword=input()   
+        if newPassword==confirmPassword:
+            if not check_user_existence(newName, getUsers):
+                record_user(newName, newPassword)
+                print("Successfully registered")
+                break
+            else:
+                print("User Name exists!! Enter a new name...")
+                correctName = False
+                continue
+        else:
+            print("Please enter your password correctly")
 
 def login_page():
     logined_in = False
     while True:
         userName=input("Enter your username: ")
-        getusers=get_info("users")
-        if userName in getusers:
-            password = getusers[userName]
+        getUsers=get_info("users")
+        if check_user_existence(userName, getUsers):
+            password = getUsers[userName]
             chances = 3
             logined_in = bool(check_password(password, chances))
         else:
@@ -21,6 +45,7 @@ def login_page():
             
 def dashboard():
     print("Welcome!")
+    ...
 
 def main():
     while True:
