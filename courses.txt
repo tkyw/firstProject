@@ -1,0 +1,42 @@
+.
+Microeconomics,4
+Quantitative Methods and Data Analysis I,4
+Principles of Finance,4
+Tamadun Islam dan Tamadun,2
+Community Service,2
+.
+Introduction to the Constitution of Malaysia, 2
+Macroeconomics, 4
+Principles of Management, 4
+Quantitative Methods and Data Analysis II, 4
+.
+Hubungan Etnik, 2
+.
+Commercial Banking, 4
+International Economics, 4
+Principles of Accounting, 4
+Statistics for Business, 4
+Basic Econometrics, 4
+Corporate Finance, 4
+Investment, 4
+Investment Banking, 4
+Monetary Policy and Financial Supervision, 4
+.
+Writing for Professional Purposes, 2
+.
+Analysis of Financial Statements, 4
+Research Methodology, 4
+Risk Management, 4
+Financial Engineering, 4
+Financial Management, 4
+.
+Chinese Financial System,4
+Insurance,4
+Financial Econometrics, 4
+International Finance Management,4
+Islamic Banking, 4
+Financial Technology, 4
+Thesis, 4
+
+.
+Industrial Training,3
