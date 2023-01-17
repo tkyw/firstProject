@@ -25,21 +25,9 @@ def check_password(correctPassword: str, chances: int) -> None:
             print("Wrong Password, You are not allowed to access anymore!!😡😡")
     return 0
 
-def register_page():
-    print("What is your name?")
-    newName=input()
-    while True:
-        print("What is your password?")
-        newPassword=input()
-        print("Please enter again to confirm your password.")
-        confirmPassword=input()   
-        if newPassword==confirmPassword:
-            print("Successfully registered")
-            record_user(newName, newPassword)
-            break
-        else:
-            print("Please enter your password correctly")
-
 def record_user(newName, newPassword):
     with open("users.txt", "a") as wf:
         wf.write(f"{newName}, {newPassword}\n") 
+
+def check_user_existence(userName, getUsers):
+    return userName in getUsers
