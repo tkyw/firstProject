@@ -1,0 +1,37 @@
+[
+    {
+        "Student Name": "lee",
+        "Age": 20,
+        "Password": "1234",
+        "Email": "lee1234",
+        "Student ID": "23011"
+    },
+    {
+        "Student Name": "ng",
+        "Age": 20,
+        "Password": "1234",
+        "Email": "ng1234",
+        "Student ID": "23012"
+    },
+    {
+        "Student Name": "siow",
+        "Age": 20,
+        "Password": "1234",
+        "Email": "siow1234",
+        "Student ID": "23013"
+    },
+    {
+        "Student Name": "tee",
+        "Age": 20,
+        "Password": "1234",
+        "Email": "tee1234",
+        "Student ID": "Fin23014"
+    },
+    {
+        "Student Name": "Siow Peng",
+        "Age": 21,
+        "Password": "1234",
+        "Email": "siowp1234",
+        "Student ID": "Fin23015"
+    }
+]
