@@ -2,20 +2,42 @@ from os.path import exists
 import json
 from datetime import datetime
 
-def get_info(filename: str) -> dict:  # users
-    with open(f"{filename}.txt", "r") as rf:
-        items = [line.strip() for line in rf.readlines() if line.strip() != "" and line.strip() != "."]
-        infos = {}
-        for item in items:
-            splittedItem = item.split(",") # [key, value]
-            key = splittedItem[0]
-            value = splittedItem[1].strip()
-            # infos[key] = int(value) if filename == 'courses' else value
-            if filename == "courses":
-                infos[key] = int(value)
-            elif filename == "users":
-                infos[key] = value
+user_filename = "user_details.json"
+
+def split_comma(items: list) -> dict:
+    infos = {} 
+    splittedItem = item.split(",") # [key, value]
+    key = splittedItem[0]
+    value = splittedItem[1].strip()            
+    if filename == "courses":
+        infos[key] = int(value)
+    elif filename == "users":
+        infos[key] = value
     return infos
+
+def get_info(filename: str):  # users
+    infos = ""
+    with open(f"{filename}.txt", "r") as rf:
+        contents = [item.strip() for item in rf.readlines()]
+        if "." not in contents:
+            items = [content for content in contents if content.strip() != ""]
+            infos = split_comma(items)
+        else:
+            items, item = [], []
+            for content in contents:
+                is_dot = False
+                if content == ".":
+                    is_dot = True
+                if not is_dot:
+                    item.append(content)
+                else:
+                    items.append(item)
+                    item = []
+            infos = [splitted_comma(item) for item in items]
+    return infos
+
+
+    
 
 def check_password(correctPassword: str, chances: int) -> None:
     for chance in range(chances):
@@ -29,11 +51,15 @@ def check_password(correctPassword: str, chances: int) -> None:
             print("Wrong Password, You are not allowed to access anymore!!😡😡")
     return 0
 
-def record_user(newName, newPassword):
+def record_user(newName:str, newPassword:str)-> None:
     with open("users.txt", "a") as wf:
         wf.write(f"{newName}, {newPassword}\n") 
 
-def record_user_details(newName, newPassword, age, email):
+def record_json(json_writer, content):
+    json_data = json_wrtier.dumps(content)
+    json_writer.write(json_data)
+
+def record_user_details(newName:str, newPassword:str, age:str, email:str)-> None:
     filename = "user_details.json"
     info = {
                 "Student Name" : newName,
@@ -57,10 +83,17 @@ def record_user_details(newName, newPassword, age, email):
                 json_details = json.dumps(details)
                 wf.write(json_details)
 
-def check_user_existence(userName, getUsers):
+def update_details(index: int, latestDetails: dict):
+    users = get_all_users()
+    users[index] = latestDetails
+    json_details = json.dumps(users)
+    with open(user_filename) as wf:
+        wf.write(json_details)
+
+def check_user_existence(userName:str, getUsers:list)-> bool:
     return userName in getUsers
 
-def student_id_creator(userName):
+def student_id_creator()-> str:
     filename = "user_details.json"
     date = datetime.now()
     year, month = str(date.year)[-2:], datetime.strftime(date, "%m")
@@ -72,6 +105,50 @@ def student_id_creator(userName):
             details = json.loads(sDetails)
             num_student = len(details)
             num_zeros = len(str(num_student))  # '0' * (num_zeros -1)
-            id_ = (("0" * (num_zeros -1)) + str(num_student + 1))[-3:]
+            id_ = (("0" * (num_zeros -1)) + str(num_student + 1))[-num_zeros:]
             student_id = f"Fin{year}{month}{id_}"
             return student_id
+
+def append_courses(currentUser):
+
+    filename = "courses.txt" # file name 
+    all_courses = get_info(filename)
+    currentUserDetails, index = get_current_student_info(currentUser)
+    courses = currentUserDetails.get("courses")
+    if courses is None:
+        courses = {}
+        courses['Y1S1'] = all_courses[0]
+        currentUserDetails['courses'] = courses
+        update_details(index, currentUserDetails)
+    else:
+        num_courses = len(courses)
+        year = 1
+        if num_courses < 3:
+            sem = num_courses + 1
+        else:
+            sem = 1
+        if num_courses % 3 == 0:
+            year += num_courses / 3
+        courses[f"Y{year}S{sem}"] = courses[num_courses]
+        currentUserDetails['courses'] = courses
+        update_details(index, currentUserDetails)
+        
+
+def get_current_student_info(currentUser: str) -> tuple:
+    filename="user_details.json"
+    current_user=""
+    with open (filename,"r") as rf:
+        app_course=rf.read()
+        appended_course=json.loads(app_course)
+        for index, course in enumeate(appended_course):
+            if course["Student Name"]==currentUser:
+                current_user=course
+    return current_user, index
+
+def get_all_users():
+    filename="user_details.json"
+    with open (filename,"r") as rf:
+        str_users=rf.read()
+        users=json.loads(str_users)
+    return users
+

@@ -1,7 +1,14 @@
-from utilities import get_info, check_password, record_user,record_user_details,check_user_existence,student_id_creator
+from utilities import (
+                        get_info, 
+                        check_password, 
+                        record_user,
+                        record_user_details,
+                        check_user_existence,
+                        student_id_creator
+                        )
 from dashboard import dashboard_choice
 
-def register_page():
+def register_page()-> None:
     correctName = False
     while True:
         getUsers=get_info("users")
@@ -21,6 +28,7 @@ def register_page():
                 email=input()
                 record_user(newName, newPassword)
                 record_user_details(newName, newPassword, age, email)
+                
                 print("\n Successfully registered\n")
                 print("This is your student id:\n"+ student_id_creator(newName))
                 break
@@ -31,7 +39,7 @@ def register_page():
         else:
             print("Please enter your password correctly")
 
-def login_page():
+def login_page()-> str:
     logined_in = False
     while True:
         userName=input("Enter your username: ")
@@ -50,8 +58,7 @@ def login_page():
         if logined_in:
             return userName
 
-
-def main():
+def main()-> None:
     while True:
         print("1. Login\n2. Register\n3. Close")
         choice = int(input("Enter your choice -> "))

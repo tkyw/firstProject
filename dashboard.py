@@ -1,8 +1,8 @@
 from datetime import datetime
-from utilities import student_id_creator
 import json 
+from utilities import get_current_student_info
 
-def dashboard_choice(userName):
+def dashboard_choice(userName:str)-> None:
     print(f"Welcome Back! {userName}")
     while True:
         print("What section do you want to continue?")
@@ -18,20 +18,13 @@ def dashboard_choice(userName):
             print("\nWish you have a nice day. Bye!🙌🙌\n")
             break
    
-def studentInfo(userName):
+def studentInfo(userName: str) -> None:
     print()
     print(f"""{datetime.strftime(datetime.now(), "%Y, %B %d, %H:%M:%S")}""")
-    with open(f"user_details.json","r") as rf:
-        student_info=rf.read()
-        pyStudents=json.loads(student_info)
-        currentStudent = ""
-        for student in pyStudents:
-            if student['Student Name'] == userName:
-                currentStudent = student
-    
-        for key, value in currentStudent.items():
-            print(f"{key}: {value}")
-        print()
+    currentUserDetails, index = get_current_student_info(userName)
+    for key, value in currentUserDetails.items():
+        print(f"{key}: {value}")
+    print()
 
 def courseTaken():
     return 1
