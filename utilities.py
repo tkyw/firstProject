@@ -4,25 +4,33 @@ from datetime import datetime
 
 user_filename = "user_details.json"
 
-def split_comma(items: list) -> dict:
+def split_comma(items: list, filename: str) -> dict:
     infos = {} 
-    splittedItem = item.split(",") # [key, value]
-    key = splittedItem[0]
-    value = splittedItem[1].strip()            
-    if filename == "courses":
-        infos[key] = int(value)
-    elif filename == "users":
-        infos[key] = value
+    # print(items)
+    for item in items:
+        # print(item)
+        splittedItem = item.split(",") # [key, value]
+        key = splittedItem[0]
+        value = splittedItem[1].strip()            
+        if filename == "courses":
+            infos[key] = int(value)
+        elif filename == "users":
+            infos[key] = value
+        # print(infos)
     return infos
 
 def get_info(filename: str):  # users
     infos = ""
     with open(f"{filename}.txt", "r") as rf:
-        contents = [item.strip() for item in rf.readlines()]
+        contents = [item.strip() for item in rf.readlines() if item.strip() != ""]
         if "." not in contents:
+            print("here is user")
+            print("-"* 40)
             items = [content for content in contents if content.strip() != ""]
-            infos = split_comma(items)
+            infos = split_comma(items, "users")
         else:
+            print("here is courses")
+            print("-"* 40)
             items, item = [], []
             for content in contents:
                 is_dot = False
@@ -30,10 +38,14 @@ def get_info(filename: str):  # users
                     is_dot = True
                 if not is_dot:
                     item.append(content)
+                    if content == contents[-1]:
+                        items.append(item)
                 else:
                     items.append(item)
                     item = []
-            infos = [splitted_comma(item) for item in items]
+            print(items)
+            print("-" * 50)
+            infos = [split_comma(item, "courses") for item in items]
     return infos
 
 
